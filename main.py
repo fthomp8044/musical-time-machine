@@ -1,16 +1,19 @@
-# This is a sample Python script.
+from bs4 import BeautifulSoup
+import requests
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# DATE = input("Which year would you like to travel back to? Type the date in this format YYYY-MM-DD:")
+
+response = requests.get(f"https://www.billboard.com/charts/hot-100/2012-08-04")
+
+soup = BeautifulSoup(response.text, 'html.parser')
+
+#------------------LONGER WAY HERE VVV------------------------------
+# song_titles = []
+# for song in song_title:
+#     print(song_titles.append(song.getText()))
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+song_title = soup.find_all('span', class_='chart-element__information__song text--truncate color--primary')
+song_titles = [song.getText() for song in song_title]
+print(song_titles)
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
